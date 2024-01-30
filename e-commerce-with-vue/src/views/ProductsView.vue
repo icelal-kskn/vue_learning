@@ -1,16 +1,70 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-  <h1>This is the product page</h1>
+  <div id="page-wrap">
+    <div class="grid-wrap">
+      <div
+        v-for="product in products"
+        class="product-item"
+        v-bind:key="product.id"
+      >
+        <img v-bind:src="product.imageUrl" />
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-price">${{ product.price }}</p>
+        <router-link v-bind:to="'/products/' + product.id">
+          <button>View Details</button>
+        </router-link>
+      </div>
+    </div>
+  </div>
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
+import { products } from '../fake-data';
+
 export default {
-  name: "ProductsView",
+    name: 'ProductsPage',
+    data() {
+      return {
+        products,
+      };
+    }
 };
 </script>
 <!-- eslint-disable prettier/prettier -->
 <style scoped>
-h1 {
-  color: red;
+.grid-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.product-item {
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px #888;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2%;
+  padding: 20px;
+  position: relative;
+  width: 32%;
+}
+
+.product-name {
+  margin-bottom: 0;
+}
+
+img {
+  height: 200px;
+  width: 200px;
+}
+
+a {
+  width: 100%;
+}
+
+button {
+  width: 100%;
 }
 </style>
