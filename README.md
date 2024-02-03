@@ -25,3 +25,26 @@ npm run build
 ```sh
 npm run lint
 ```
+
+
+## Install dependencies for backend
+
+Starting with initial settings 
+```sh
+npm init -y
+```
+For Express
+```sh
+npm install express
+```
+For Babel
+```sh
+npm install --save-dev @babel/core @babel/node @babel/preset-env @babel/cli @babel/plugin-transform-runtime
+npm install @babel/runtime
+```
+
+Run the backend with this code
+```sh
+npx babel-node src/server.js
+```
+
