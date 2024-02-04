@@ -9,7 +9,7 @@
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
-import { cartItems } from "../fake-data";
+import axios from "axios";
 import ProductsList from "../components/ProductsList.vue";
 
 export default {
@@ -19,7 +19,7 @@ export default {
   },
   data() {
     return {
-      cartItems,
+      cartItems: [],
     };
   },
   computed: {
@@ -27,6 +27,21 @@ export default {
       return this.cartItems.reduce((sum, item) => sum + Number(item.price), 0);
     },
   },
+  methods: {
+    
+    async removeFromCart(productId) {
+      const userId=1234;
+        const result = await axios.delete(`/api/users/${userId}/cart/${productId}`);
+        this.cartItems = result.data;
+      }
+    },
+    async created() {
+      const userId=1234;
+      const result = await axios.get(`/api/users/${userId}/cart`);
+      const cartItems = result.data;
+      this.cartItems = cartItems;
+    },
+  
 };
 </script>
 <!-- eslint-disable prettier/prettier -->

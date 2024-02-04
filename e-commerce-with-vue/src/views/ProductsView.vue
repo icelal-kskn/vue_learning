@@ -22,7 +22,7 @@ export default {
     async created(){
       const result= await axios.get('http://localhost:8000/api/products');
       this.products= result.data;
-    }
+    },
 };
 </script>
 <!-- eslint-disable prettier/prettier -->

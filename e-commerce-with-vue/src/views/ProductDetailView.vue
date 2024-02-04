@@ -17,19 +17,47 @@
 </template>
 <!-- eslint-disable prettier/prettier -->
 <script>
-import  NotFound  from "./NotFoundView";
-import { products } from "../fake-data";
+import axios from 'axios';
+import NotFound from './NotFoundView';
+
 export default {
-  name: "ProductsDetailView",
-  components:{
-    NotFound,
-  },
-  data(){
-    return{
-      product:products.find((p)=>p.id===this.$route.params.id)
-  };
-}
-}
+    name: 'ProductDetailPage',
+    components: {
+      NotFound,
+    },
+    data() {
+      return {
+        product: {},
+        cartItems: [],
+        showSuccessMessage: false,
+      };
+    },
+    computed: {
+      itemIsInCart() {
+        return this.cartItems.some(item => item.id === this.product.id);
+      }
+    },
+    methods: {
+      async addToCart() {
+        const userId=1234;
+        await axios.post(`/api/users/${userId}/cart`, {
+          productId: this.$route.params.id,
+        });
+        this.showSuccessMessage = true;
+        setTimeout(() => {
+          this.$router.push('/products');
+        }, 1500);
+      },
+    },
+    async created() {
+      const userId=1234;
+      const { data: product } = await axios.get(`/api/products/${this.$route.params.id}`);
+      this.product = product;
+
+      const { data: cartItems } = await axios.get(`/api/users/${userId}/cart`);
+      this.cartItems = cartItems;
+    }
+};
 </script>
 <!-- eslint-disable prettier/prettier -->
 <style scoped>
